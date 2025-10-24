@@ -5,9 +5,10 @@ let router = express.Router();
 
 let initWebRouters = (app) => {
     router.get("/", homeController.getHomePage);
-    router.get("/about", homeController.getAboutPage);    
+    router.get("/about", homeController.getAboutPage);
+    router.get("/get-users", homeController.displayAllUsers);  
     router.get("/hoidanit", (req, res) => {
-        return res.send("Hello word with hoidanit");
+    return res.send("Hello word with hoidanit");
     });
     return app.use("/", router);
 }
