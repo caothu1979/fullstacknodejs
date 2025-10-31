@@ -7,7 +7,8 @@ let initWebRouters = (app) => {
     router.get("/", homeController.getHomePage);
     router.get("/about", homeController.getAboutPage);
     router.get("/get-users", homeController.displayAllUsers);
-    router.get("/create-users",homeController.createUsers);     
+    router.get("/create-users", homeController.createUsers);
+    router.post("/post-users",homeController.postCreateUsers);
     router.get("/hoidanit", (req, res) => {
     return res.send("Hello word with hoidanit");
     });

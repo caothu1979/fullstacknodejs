@@ -1,5 +1,6 @@
 import db from "../models/index";
 import bcrypt from "bcryptjs";
+const salt = bcrypt.genSaltSync(10);
 let getAllUsers = () => {
     return new Promise(async(resolve, reject) => {
         try {
@@ -11,18 +12,47 @@ let getAllUsers = () => {
         }
     }) 
 }
-let createPassword = (password) => {
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(password, salt);
-    console.log(hash);
-    return hash;
-    
+let hashCreatePassword = async(password) => {
+    return new Promise(async(resolve,reject) => {
+        try {
+            const hashPassword = await bcrypt.hashSync(password, salt);
+            console.log(hashPassword);
+            resolve(hashPassword);
+        } catch(e) {
+            reject(e);
+        }       
+    })    
 }
-let createUser = (data) => {
-    console.log("Create an user:",data);
+let createUser = async (data) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            
+            const password = await hashCreatePassword(data.password);
+            let user = await db.User.create({
+                email: data.email,
+                password: password,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                address: data.address,
+                gender: data.gender === '1'? true: false,
+                roleId: data.roleId,
+                phonenumber: data.phonenumber,
+                positionId:data.positionId  
+
+            })
+            resolve("Create an user");
+        }
+        catch (e)
+        {
+            reject(e);
+        }
+    })
+    
+    console.log("password from services",password);
+    //console.log("Create an user:",data);
 }
 module.exports = {
     getAllUsers: getAllUsers,
     createUser: createUser,
-    createPassword: createPassword 
+    hashCreatePassword: hashCreatePassword
 }

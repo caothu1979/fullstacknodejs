@@ -19,14 +19,20 @@ let displayAllUsers = async(req, res) => {
         console.log(e);
     }
 }
-let createUsers = async(req,res) => {
-    await CRUDservices.createUser(req.body);
+let createUsers = (req,res) => {
     return res.render("createusers.ejs");
+}
+let postCreateUsers = async(req, res) => {
+    //console.log(req.body);
+    await CRUDservices.createUser(req.body); 
+    return res.send("Post from server");
+
 }
 
 module.exports = {
     getHomePage: getHomePage,
     getAboutPage: getAboutPage,
     displayAllUsers: displayAllUsers,
-    createUsers: createUsers
+    createUsers: createUsers,
+    postCreateUsers: postCreateUsers
 }
