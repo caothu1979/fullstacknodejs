@@ -7,12 +7,26 @@ let getAboutPage = (req, res) => {
     return res.render("about.ejs");
 }
 let displayAllUsers = async(req, res) => {
+    try {
     let data = await CRUDservices.getAllUsers();
     console.log(data);
-    return res.render("displayCRUD.ejs");
+        return res.render("displayCRUD.ejs", {
+            data: JSON.stringify(data)
+        });
+    }
+    catch (e)
+    {
+        console.log(e);
+    }
 }
+let createUsers = async(req,res) => {
+    await CRUDservices.createUser(req.body);
+    return res.render("createusers.ejs");
+}
+
 module.exports = {
     getHomePage: getHomePage,
     getAboutPage: getAboutPage,
-    displayAllUsers: displayAllUsers
+    displayAllUsers: displayAllUsers,
+    createUsers: createUsers
 }
