@@ -9,9 +9,9 @@ let getAboutPage = (req, res) => {
 let displayAllUsers = async(req, res) => {
     try {
     let data = await CRUDservices.getAllUsers();
-    console.log(data);
+    console.log(data.length);
         return res.render("displayCRUD.ejs", {
-            data: JSON.stringify(data)
+            data: data
         });
     }
     catch (e)
@@ -28,11 +28,17 @@ let postCreateUsers = async(req, res) => {
     return res.send("Post from server");
 
 }
+let editUpdateUser = async(req,res) => {
+    console.log(req.query.id);
+    let newUser = await CRUDservices.updateUserById(req.query.id);
+    return res.render("editupdateuser.ejs");
+}
 
 module.exports = {
     getHomePage: getHomePage,
     getAboutPage: getAboutPage,
     displayAllUsers: displayAllUsers,
     createUsers: createUsers,
-    postCreateUsers: postCreateUsers
+    postCreateUsers: postCreateUsers,
+    editUpdateUser: editUpdateUser
 }

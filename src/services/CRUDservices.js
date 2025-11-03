@@ -24,7 +24,7 @@ let hashCreatePassword = async(password) => {
     })    
 }
 let createUser = async (data) => {
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             
             const password = await hashCreatePassword(data.password);
@@ -34,25 +34,35 @@ let createUser = async (data) => {
                 firstName: data.firstName,
                 lastName: data.lastName,
                 address: data.address,
-                gender: data.gender === '1'? true: false,
+                gender: data.gender === '1' ? true : false,
                 roleId: data.roleId,
                 phonenumber: data.phonenumber,
-                positionId:data.positionId  
+                positionId: data.positionId
 
             })
             resolve("Create an user");
         }
-        catch (e)
-        {
+        catch (e) {
             reject(e);
         }
-    })
-    
-    console.log("password from services",password);
-    //console.log("Create an user:",data);
+    });      
 }
+let updateUserById = async(id) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: id }
+            }
+            );
+            resolve(user);
+        } catch {
+            reject(e);
+        }
+    });
+} 
 module.exports = {
     getAllUsers: getAllUsers,
     createUser: createUser,
-    hashCreatePassword: hashCreatePassword
+    hashCreatePassword: hashCreatePassword,
+    updateUserById: updateUserById
 }

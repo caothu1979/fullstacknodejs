@@ -7,7 +7,8 @@
 </head>
 <body>
     <h1>This is get all users</h1>
-    <p><%= data %></p>
+    <p><%= data.length %></p>
+    
     <div class="container">
         <table class="table table-striped">
             <thead>
@@ -16,18 +17,41 @@
                     <th scope="col">Email</th>
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
+                    <th scope="col">Gender</th>
                     <th scope="col">PhoneNumber</th>
                     <th scope="col">Address</th>
                     <th scope="col">Role</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
+                <% for(let i=0; i < data.length; i++) {%>
+                        <tr>
+                            <td><%= data[i].id %></td>
+                            <td><%= data[i].email %></td>
+                            <td><%= data[i].firstName %></td>
+                            <td>
+                                <%= data[i].lastName %>
+                            </td>
+                            <td>
+                                <%= data[i].gender %>
+                            </td>
+                            <td>
+                                <%= data[i].phonenumber %>
+                            </td>
+                            <td>
+                                <%= data[i].address %>
+                            </td>
+                            <td>
+                                <%= data[i].roleId %>
+                            </td>
+                            <td>
+                                <a href="/edit-user?id=<%= data[i].id %>" type="button">Edit</a>
+                                <a href="" type="button">Delete</a>
+                            </td>
+                        </tr>
+                    <% } %>
+               
             </tbody>
         </table>
     </div>
